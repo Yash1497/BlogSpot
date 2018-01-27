@@ -1,6 +1,6 @@
 <% include partials/header %>
-<div style="margin-top:5em;" class="ui main text container segment">
-  <div class="ui huge header"><%= blog.title %> </div>
+<div id="showContainer" class="ui main text container segment">
+  <div id="showHeader" class="ui huge header"><%= blog.title %> </div>
    <div class="ui top attached">
      <div class="item">
       <img class="ui centered rounded image" src="<%= blog.image %>">
@@ -11,8 +11,28 @@
      <div class="description">
       <p><%- blog.body %></p>
      </div>
-    
-  </div>      
+     <a class="ui inverted green button" href="/blogs/<%= blog._id %>/edit">Update</a>
+     <form id="delete" action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
+       <button class="ui inverted red button">Delete</button>
+     </form>
+     </div>
+  </div>   
+
+
+<style>
+  
+  body{
+    background:#022747;
+  }
+ #showHeader{
+    color:red;
+  }
+  
+  #showContainer{
+    background:#1995B6;
+  }
+
+</style>
          
          
          

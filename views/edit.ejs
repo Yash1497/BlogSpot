@@ -1,0 +1,36 @@
+<% include partials/header %>
+
+
+<div id="editContainer" class="ui main text container segment">
+  <div id="editHeader" class="ui huge header ">Edit Blog</div>
+  <form class="ui form" action="/blogs/<%= blog._id %>?_method=PUT" method="POST">
+    <div class="filed">
+      <label>TITLE</label>
+      <input type="text"  name="blog[title]" value="<%= blog.title %>">
+    </div>
+    <div class="filed">
+       <label>IMAGE</label>
+       <input type="text" name="blog[image]" value="<%= blog.image %>">
+    </div>
+    <div class="field">
+       <label>Blog Content</label>
+       <textarea name="blog[body]"><%= blog.body %> </textarea>
+    </div>
+      <input class="ui inverted green button big" type="submit">
+  </form>
+</div>
+
+<style>
+  
+  body{
+    background:#022747;
+  }
+ #editHeader{
+    color:red;
+  }
+  
+  #editContainer{
+    background:#1995B6;
+  }
+
+</style>

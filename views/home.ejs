@@ -1,14 +1,56 @@
 <% include ./partials/header %>
-
-<% blogs.forEach(function(blog){ %>
-       <div style="margin-top:5em;">
-         <h1><%= blog.title %></h1>
-         <img src="<%= blog.image %>">
-         <h5><%= blog.created.toDateString() %></h5>
-         <p><%= blog.body.substring(0,100) %>...</p>
-         <a class="ui basic black button "href="/blogs/<%= blog._id %>">Read More</a>
+<div id="homeContainer" class="ui main text container">
+  <div id="homeHeader" class="ui huge header ">Blogs</div>
+  <div id="segment" class="ui top attached segment">
+    <div class="ui divided items">
+      <% blogs.forEach(function(blog){ %>
+       <div class="item">
+         <div class="image">
+          <img src="<%= blog.image %>">
+         </div>
+         <div class="content">
+           <a class="header" href="/blogs/<%= blog._id %>"></a>
+           <div class="meta">
+            <h5><%= blog.created.toDateString() %></h5>
+           </div>
+           <div class="description">
+              <p><%= blog.body.substring(0,100) %>...</p>
+           </div>
+           <div class="extras">
+               <a class="ui inverted blue button "href="/blogs/<%= blog._id %>">Read More<i class="right chevron icon"></i></a>
+           </div>
+         </div>
+        </div>
+          <% }); %>
        </div>
-<% }); %>
+  </div>
+</div>
+
+<style>
+  
+  body{
+    background:#022747;
+  }
+ #homeHeader{
+    color:yellow;
+    text-align:center;
+    
+  }
+  
+  
+  
+  
+  @keyframes header{
+    0%{top:0px;left:00px;}
+    50%{top:0px;left:-600px;}
+    100%{top:0px;left:00px;}
+  }
+  
+
+
+  
+</style>
+
 
 
 <% include partials/footer %>
