@@ -14,7 +14,7 @@
             <h5><%= blog.created.toDateString() %></h5>
            </div>
            <div class="description">
-              <p><%= blog.body.substring(0,100) %>...</p>
+              <p><%= blog.body.substring(0,120)%>..</p>
            </div>
            <div class="extras">
                <a class="ui inverted blue button "href="/blogs/<%= blog._id %>">Read More<i class="right chevron icon"></i></a>
@@ -46,8 +46,6 @@
     100%{top:0px;left:00px;}
   }
   
-
-
   
 </style>
 
@@ -56,9 +54,3 @@
 <% include partials/footer %>
 
 <style>
-
-
-
-
-
-</style>

@@ -1,0 +1,60 @@
+<% include ./partials/header %>
+
+
+<!-- <div class="container">
+    <div id = "frm">
+    <form action="/register" method="POST">
+      <div class="form-group">
+        <input class="form-control" type="text" placeholder="username"  name="username">
+      </div>
+       <div class="form-group">
+          <input class="form-control" type="password" placeholder="password" name="password">
+       </div>
+       <div class="form-group">
+          <button class="">Sign Up</button>
+       </div>
+    </form>
+  </div>
+</div> -->
+    
+
+<div id="newContainer"  class="ui main text container segment">
+  <div id="newHeader" class="ui huge header" >Sign In</div>
+  <form id="newForm" class="ui form" action="/register" method="POST">
+    <div class="filed">
+      <label>Username</label>
+      <input type="text" placeholder="username" name="username">
+    </div>
+    <div class="filed">
+       <label>Password</label>
+       <input type="password" placeholder="password" name="password">
+    </div>
+     <input class="ui inverted green button big" type="submit">
+    </form>
+</div>
+  
+
+<style>
+  
+  h1{
+    text-align:center;
+  }
+
+  body{
+    background:#022747;
+  }
+ #newHeader{
+    color:red;
+   text-align:center;
+  }
+  
+  #newContainer{
+    background:#1995B6;
+    width;500px;
+  }
+  
+  .button{
+    margin-top:5px;
+  }
+  
+</style>

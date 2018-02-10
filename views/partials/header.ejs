@@ -26,10 +26,19 @@
     <body>
      <div id="nav" class = "ui fixed inverted menu">
        <div class = "ui container">
-         <div class = "header item"><i class="idea icon"></i>BLOGS</div>
+         <a class = "header item" href="/"><i class="idea icon"></i>BLOGS</a>
          <a href="/blogs" class = "item">HOME</a>
          <a href="/blogs/new" class = "item">newBLOGS</a>
+             <% if(!currentUser){%>
+                 <a href="/register" class = "ui right item">Sign Up</a>
+                 <a href="/login" class = "ui right item">Login</a>
+             <% }else{ %>
+               <a href="#"class = "ui right item"><%= currentUser.username%></a>
+               <a href="/logout"  class = "ui right item">Log Out</a>
+              <% } %>
        </div>  
      </div>
+      
+    
 
 

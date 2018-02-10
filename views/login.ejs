@@ -1,0 +1,37 @@
+<% include ./partials/header %>
+
+
+<div id="newContainer" class="ui main text container segment">
+  <div id="newHeader" class="ui huge header ">LogIn</div>
+  <form id="newForm" class="ui form" action="/login" method="POST">
+    <div class="filed">
+      <label>Username</label>
+      <input type="text" placeholder="uername" name="username">
+    </div>
+    <div class="filed">
+       <label>Password</label>
+       <input type="password" placeholder="password" name="password">
+    </div>
+      <input class="ui inverted green button big" type="submit">
+  </form>
+</div>
+
+
+<style>
+  
+  body{
+    background:#022747;
+  }
+ #newHeader{
+    color:red;
+   text-align:center;
+  }
+  
+  #newContainer{
+    background:#1995B6;
+  }
+
+</style>
+
+
+<% include partials/footer %>
