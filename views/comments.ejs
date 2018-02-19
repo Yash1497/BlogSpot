@@ -1,0 +1,30 @@
+<% include partials/header %>
+
+<div id="newContainer" class="ui main text container segment">
+  <div id="newHeader" class="ui huge header ">Add  new comment to <%= blog.title %></div>
+       <form id="newForm" class="ui form" action="/blogs/<%= blog._id %>/comments" method="POST">
+      <div class="filled">
+        <input  type="text" placeholder="text" name="comment[text]">
+      </div>
+         <br>
+      <input class="ui inverted green button big" type="submit">
+      <a id="back" class="ui inverted red button big" href="/blogs">GO BACK</a>
+    </form>
+      </div>
+
+<style>
+  
+  body{
+    background:#022747;
+  }
+ #newHeader{
+    color:red;
+   text-align:center;
+  }
+  
+  #newContainer{
+    background:#1995B6;
+  }
+
+</style>
+

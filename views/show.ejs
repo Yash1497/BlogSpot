@@ -15,8 +15,23 @@
      <form id="delete" action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
        <button class="ui inverted red button">Delete</button>
      </form>
+      <a class="ui inverted green button" href="/blogs/<%= blog._id %>/comments">comments</a>
      </div>
-  </div>   
+  <div> 
+    <% blog.comments.forEach(function(comment){ %>
+      <strong><%= comment.author.username %></strong>
+     <p>
+       <%= comment.text %>
+    </p>
+    
+    <hr>
+     <% }); %>
+  </div>
+         
+  </div>
+</div>
+   
+    
 
 
 <style>

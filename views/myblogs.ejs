@@ -1,4 +1,7 @@
-<% include ./partials/header %>
+ <% if(!currentUser){ %>
+                 ur not a current user
+             <% }else{ %>
+
 <div id="homeContainer" class="ui main text container">
   <div id="homeHeader" class="ui huge header ">Blogs</div>
   <div id="segment" class="ui top attached segment">
@@ -26,25 +29,5 @@
        </div>
   </div>
 </div>
-
-<style>
-  
-  body{
-    background:#022747;
-  }
- #homeHeader{
-    color:yellow;
-    text-align:center;
-    
-  }
-  
-  
-  p{
-    color:blue;
-  }
-  
-  
-</style>
-
-
-
+              
+              <% } %>

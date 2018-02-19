@@ -1,11 +1,14 @@
-var express = require('express');
-var app = express();
-var methodOverride = require('method-override');
-var bodyParser = require("body-parser");
-var mongoose = require('mongoose');
-var passport = require('passport');
-var LocalStrategy  = require('passport-local');
-var User = require('./models/user');
+var express           = require('express');
+var app               = express();
+var methodOverride    = require('method-override');
+var bodyParser        = require("body-parser");
+var mongoose          = require('mongoose');
+var passport          = require('passport');
+var LocalStrategy     = require('passport-local');
+var Blog              = require("./models/blog");
+var User              = require('./models/user');
+var Comment           = require('./models/comment');
+
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 mongoose.connect("mongodb://localhost/restfull_blog");
@@ -36,16 +39,7 @@ app.use(function(req,res,next){
 
 
 
-///////////////////////////////////////////////Declaring Schema//////////////////////////////////////
 
-var blogSchema = new mongoose.Schema({
-  title:"String",
-  image:"String",
-  body:"String",
-  created:{type:Date, default:Date.now}
-});
-
-var Blog = mongoose.model("Blog", blogSchema)
 
 /////////////////////////////////////////// get ROUTES////////////////////////////////////////
 
@@ -87,13 +81,57 @@ app.post("/blogs",isLoggedIn,function(req,res){
 
 
 app.get("/blogs/:id",isLoggedIn,function(req, res){
-  Blog.findById(req.params.id, function(err,foundBlogs){
+  Blog.findById(req.params.id).populate("comments").exec(function(err,foundBlogs){
       if(err){
     console.log(err)
 } else{
-  res.render("show",{blog:foundBlogs})
+  res.render("show",{blog:foundBlogs});
+  
 }});
 });
+
+//==============================================================Commemts route================================================//
+
+
+app.get("/blogs/:id/comments" ,function(req,res){
+   Blog.findById(req.params.id,function(err,blog){
+    if(err){
+      console.log(err)
+    } else{
+       res.render("comments",{blog:blog});
+    }
+  });
+});
+
+
+//========================================================Commemts post route================================================//
+
+
+app.post("/blogs/:id/comments" ,function(req,res){
+   Blog.findById(req.params.id,function(err,blog){
+    if(err){
+      console.log(err)
+    } else{
+      Comment.create(req.body.comment,function(err,comment){
+        if(err){
+          console.log(err)
+        } else{
+          comment.author.id = req.user._id;
+          comment.author.username = req.user.username;
+          comment.save();
+          blog.comments.push(comment);
+          blog.save();
+          res.redirect("/blogs/" + blog._id);
+        }
+      }); 
+    }
+  });
+});
+
+
+
+
+
 
 
 /////////////////////////////////////edit route/////////////////////////////
@@ -183,9 +221,10 @@ function isLoggedIn(req,res,next){
   }
 }
 
-
-
-
+///////////////////////////my blogs////////////////////////////
+app.get("/blogs/myblogs",function(req,res){
+  re.render("myblogs")
+});
 
 app.listen(3000, function() {
   console.log('Example app listening on port 3000!');

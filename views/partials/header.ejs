@@ -2,6 +2,7 @@
 <html>
    <head>
     <title>RESTfull</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.4/semantic.min.css">
     <style>
        i.icon {
@@ -14,8 +15,8 @@
       #delete{
         display:inline;
       }
-      
-      
+
+     
 
    
      
@@ -26,15 +27,14 @@
     <body>
      <div id="nav" class = "ui fixed inverted menu">
        <div class = "ui container">
-         <a class = "header item" href="/"><i class="idea icon"></i>BLOGS</a>
-         <a href="/blogs" class = "item">HOME</a>
+         <a class = "header item" href="/blogs"><i class="idea icon"></i>BLOGS</a>
          <a href="/blogs/new" class = "item">newBLOGS</a>
          <div class = "right menu">
           <% if(!currentUser){ %>
                  <a href="/register" class = "item">Sign Up</a>
                  <a href="/login" class = "item">Login</a>
              <% }else{ %>
-               <a href="#" class = "item"><%= currentUser.username%></a>
+               <a href="/blogs/myblogs" class = "item"><strong><%= currentUser.username%></strong></a>
                <a href="/logout"  class = "item">Log Out</a>
               <% } %>
          </div>
