@@ -11,6 +11,9 @@
      <div class="description">
       <p><%- blog.body %></p>
      </div>
+      <p>
+       <em>created by:-</em> <strong><%= blog.author.username %></strong>
+     </p>
      <a class="ui inverted green button" href="/blogs/<%= blog._id %>/edit">Update</a>
      <form id="delete" action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
        <button class="ui inverted red button">Delete</button>

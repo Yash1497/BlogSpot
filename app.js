@@ -68,14 +68,34 @@ app.get("/blogs/new",isLoggedIn,function(req,res){
 
 
 app.post("/blogs",isLoggedIn,function(req,res){
-  Blog.create(req.body.blog,function(err,newBlog){
+   User.findById(req.user._id,function(err,user){
     if(err){
-      console.log(err);
+      console.log(err)
     } else{
-      res.redirect("/blogs")
+      
+      var title = req.body.title;
+      var image = req.body.image;
+      var body = req.body.body;
+      var author ={
+        id:req.user._id,
+        username:req.user.username
+      }
+      var newblog = {title:title,image:image,body:body,author:author}
+    Blog.create(newblog,function(err,newBlog){
+        if(err){
+          console.log(err);
+        } else{
+          newBlog.save();
+          user.blogs.push(newBlog);
+          user.save();
+          res.redirect("/blogs")
+        }
+      });
+      
     }
-  });
+
 });
+  });
 
 ////////////////////////////////////////show routes//////////////////////////
 
@@ -128,6 +148,25 @@ app.post("/blogs/:id/comments" ,function(req,res){
   });
 });
 
+
+///////////////////////my blog/////////////////////////////////////
+
+
+app.get("/myblogs",isLoggedIn,function(req,res){
+  User.findById(req.user._id,function(err,user){
+    if(err){
+      console.log(err)
+    } else{
+      Blog.find({},function(err,blogs){
+        if(err){
+          console.log(err)
+        } else{
+          res.render("myblogs",{user:user,blogs:blogs})
+        }
+      });
+    }
+  });
+});
 
 
 

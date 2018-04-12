@@ -1,12 +1,11 @@
- <% if(!currentUser){ %>
-                 ur not a current user
-             <% }else{ %>
+<% include ./partials/header %>
+
 
 <div id="homeContainer" class="ui main text container">
   <div id="homeHeader" class="ui huge header ">Blogs</div>
   <div id="segment" class="ui top attached segment">
     <div class="ui divided items">
-      <% blogs.forEach(function(blog){ %>
+      <% user.blogs.forEach(function(blog){ %>
        <div class="item">
          <div class="image">
           <img src="<%= blog.image %>">
@@ -18,8 +17,9 @@
             <h5><%= blog.created.toDateString() %></h5>
            </div>
            <div class="description">
-              <p><%= blog.body.substring(0,120)%>..</p>
+              <p><%= blog.body.substring(0,150)%>..</p>
            </div>
+           
            <div class="extras">
                <a class="ui inverted blue button "href="/blogs/<%= blog._id %>">Read More<i class="right chevron icon"></i></a>
            </div>
@@ -29,5 +29,25 @@
        </div>
   </div>
 </div>
-              
-              <% } %>
+
+<style>
+  
+  body{
+    background:#022747;
+  }
+ #homeHeader{
+    color:yellow;
+    text-align:center;
+    
+  }
+  
+  
+  p{
+    color:blue;
+  }
+  
+  
+</style>
+
+
+
