@@ -6,27 +6,36 @@
       <img class="ui centered rounded image" src="<%= blog.image %>">
      </div>
      <div class="content">
-       <span><%= blog.created.toDateString() %></span>
+       <strong><span><%= blog.created.toDateString() %></span></strong>
      </div>
      <div class="description">
       <p><%- blog.body %></p>
      </div>
       <p>
        <em>created by:-</em> <strong><%= blog.author.username %></strong>
-     </p>
-     <a class="ui inverted green button" href="/blogs/<%= blog._id %>/edit">Update</a>
-     <form id="delete" action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
-       <button class="ui inverted red button">Delete</button>
-     </form>
+     </p> 
+     <% if(currentUser && blog.author.id.equals(currentUser._id)){ %>
+       <a class="ui inverted green button" href="/blogs/<%= blog._id %>/edit">Update</a>
+       <form id="delete" action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
+         <button class="ui inverted red button">Delete</button>
+       </form>
+    <% }%>
       <a class="ui inverted green button" href="/blogs/<%= blog._id %>/comments">comments</a>
+     <hr>
+     
      </div>
   <div> 
     <% blog.comments.forEach(function(comment){ %>
       <strong><%= comment.author.username %></strong>
      <p>
-       <%= comment.text %>
+       "<%= comment.text %>"
     </p>
+     <% if(currentUser && blog.author.id.equals(currentUser._id)){ %>
+    <form id="delete" action="/blogs/<%= blog._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+         <button class="ui inverted red button">Delete</button>
+       </form>
     
+    <% }%>
     <hr>
      <% }); %>
   </div>

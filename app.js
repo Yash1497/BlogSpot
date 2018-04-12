@@ -73,10 +73,10 @@ app.post("/blogs",isLoggedIn,function(req,res){
       console.log(err)
     } else{
       
-      var title = req.body.title;
-      var image = req.body.image;
-      var body = req.body.body;
-      var author ={
+      var title  = req.body.title;
+      var image  = req.body.image;
+      var body   = req.body.body;
+      var author = {
         id:req.user._id,
         username:req.user.username
       }
@@ -149,6 +149,23 @@ app.post("/blogs/:id/comments" ,function(req,res){
 });
 
 
+
+//========================================================Commemts delete route================================================//
+
+
+
+
+app.delete("/blogs/:id/comments/:comment_id",ownership,function(req,res){
+  Comment.findByIdAndRemove(req.params.comment_id, function(err){
+     if(err){
+    console.log(err)
+} else{
+res.redirect("/blogs/" + req.params.id);
+}
+   });
+});
+
+
 ///////////////////////my blog/////////////////////////////////////
 
 
@@ -175,7 +192,7 @@ app.get("/myblogs",isLoggedIn,function(req,res){
 
 /////////////////////////////////////edit route/////////////////////////////
 
-app.get("/blogs/:id/edit",isLoggedIn,function(req, res){
+app.get("/blogs/:id/edit",ownership,function(req, res){
    Blog.findById(req.params.id, function(err,foundBlogs){
       if(err){
     console.log(err)
@@ -188,7 +205,7 @@ app.get("/blogs/:id/edit",isLoggedIn,function(req, res){
 
 /////////////////////////////////////////update button blog//////////////////////////////
 
-app.put("/blogs/:id",isLoggedIn, function(req, res){
+app.put("/blogs/:id",ownership, function(req, res){
   Blog.findByIdAndUpdate(req.params.id, req.body.blog ,function(err,updateBlogs){
      if(err){
     console.log(err)
@@ -201,7 +218,7 @@ app.put("/blogs/:id",isLoggedIn, function(req, res){
 
 ///////////////////delete routes////////////////////////////////////
 
-app.delete("/blogs/:id",isLoggedIn,function(req,res){
+app.delete("/blogs/:id",ownership,function(req,res){
   Blog.findByIdAndRemove(req.params.id, function(err){
      if(err){
     console.log(err)
@@ -218,7 +235,7 @@ app.get("/register",function(req,res){
 });
 
 app.post("/register",function(req,res){
-  var newUser = new User({username:req.body.username});
+  var newUser  = new User({username:req.body.username});
   var password = req.body.password; 
   User.register(newUser, password, function(err, user){
     if(err){
@@ -260,10 +277,29 @@ function isLoggedIn(req,res,next){
   }
 }
 
-///////////////////////////my blogs////////////////////////////
-app.get("/blogs/myblogs",function(req,res){
-  re.render("myblogs")
-});
+//=======================================owenership=========================================//
+function ownership(req,res,next){
+   if(req.isAuthenticated()){
+      Blog.findById(req.params.id, function(err,foundBlogs){
+      if(err){
+          res.redirect("back");
+      } else{
+         if(foundBlogs.author.id.equals(req.user._id)){
+            next();
+      }else{
+        res.redirect("back");
+      }
+
+    }
+        });
+   } 
+        
+        else{
+        res.render("edit",{blog:foundBlogs})
+        }
+ 
+}
+
 
 app.listen(3000, function() {
   console.log('Example app listening on port 3000!');
