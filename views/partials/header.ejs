@@ -1,46 +1,59 @@
-<!DOCTYPE html>
-<html>
+<html lang="en">
    <head>
-    <title>RESTfull</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.4/semantic.min.css">
-    <style>
-       i.icon {
-        font-size: 24px;
+    <title>BlogApp</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+  <link href="https://fonts.googleapis.com/css?family=Nunito:900" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">  </head>
+     
+  
+  <style>
+    body{
+      background-color:#F2F3F7;
     }
-    
-    .container.main{
-      margin-top:5em;
-    }
-      #delete{
-        display:inline;
-      }
-
-     
-
-   
-     
-     
-     </style>
-     
-  </head>
+       </style>
     <body>
-     <div id="nav" class = "ui fixed inverted menu">
-       <div class = "ui container">
-         <a class = "header item" href="/blogs"><i class="idea icon"></i>BLOGS</a>
-         <a href="/blogs/new" class = "item">newBLOGS</a>
-         <div class = "right menu">
-          <% if(!currentUser){ %>
-                 <a href="/register" class = "item">Sign Up</a>
-                 <a href="/login" class = "item">Login</a>
-             <% }else{ %>
-               <a href="/myblogs" class = "item"><strong><%= currentUser.username%></strong></a>
-               <a href="/logout"  class = "item">Log Out</a>
-              <% } %>
-         </div>
-       </div>  
-     </div>
+
+
       
-    
+      <nav class="navbar  navbar-expand-lg bg-dark">
+  <a class="navbar-brand text-white" href="/">Blog</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item ">
+        <a href="/blogs/new" class = "nav-link text-white">newBLOGS</a>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right ">
+      <li><a href="/askQuestion" class="text-white mr-2">Ask Question</a></li>
+      <% if(!currentUser){%>
+                 <li><a href="/login" class="text-white mr-2">Login</a></li>
+                 <li><a href="/register" class="text-white mr-2">Sign Up</a></li>
+             <% }else{ %>
+               <li><a href="/myblogs" class="text-white mr-2"><%= currentUser.username%></a></li>
+                  <li><a href="/logout" class="text-white mr-2">Log Out</a></li>
+              <% } %>
+    </ul>
+  </div>
+</nav>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      

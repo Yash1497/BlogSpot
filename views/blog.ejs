@@ -1,8 +1,44 @@
 <% include ./partials/header %>
+ 
+<div class="row">
+<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+  </div>
 
-<div id="homeContainer" class="ui main text container">
-<h1>MYsitE</h1>
-  <p>TO ADD NEW BLOG CLICK HERE ==> <strong><a href="/blogs/new">ADD NEW BLOG</a></strong></p>
-  <p>ALREADY A USER CLICK HERE ==> <strong><a href="/login">LOG IN </a></strong></p>
-  <strong><p>NEW USER CLICK HERE ==> <strong><a href="/register">SIGN UP </a></strong></p></strong>
+<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+  
+      <div class="card mb-2 mt-2">
+      <div class="card-body">
+         <% if(!currentUser){%>
+        <% }else{ %>
+        <p>
+          <i class="fa fa-user-circle"></i> <a href="/myblogs"><%= currentUser.username%></a>
+        </p>
+        
+        <% } %>
+        <strong><a href="/askQuestion"> What is your question?</a></strong>
+      </div>
+    </div>
+
+      <% questions.forEach(function(question){ %>
+      <div class="card mb-2">       
+      <div class="card-body">      
+      <strong><%- question.question%></strong>
+       
+        <div> 
+          <p class="pull-right" ><spam class="text-muted"> asked by</spam> <em><%= question.questionAsker%></em><spam class="text-muted"> on</spam> <em><%= question.created.toDateString() %></em></p>
+        </div>
+          <a href="/question/<%=question._id%>"><i class="fa fa-edit"></i>Answer</a>
+      </div>
+    </div>
+  <%});%>
+  </div> 
+
+<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+  </div>
 </div>
+
+
+
+
+
+  

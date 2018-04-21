@@ -8,6 +8,7 @@ var LocalStrategy     = require('passport-local');
 var Blog              = require("./models/blog");
 var User              = require('./models/user');
 var Comment           = require('./models/comment');
+var Question          = require("./models/question")
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
@@ -44,11 +45,9 @@ app.use(function(req,res,next){
 /////////////////////////////////////////// get ROUTES////////////////////////////////////////
 
 
-app.get("/", function(req, res) {
-  res.render("blog");
-});
 
-app.get("/blogs",isLoggedIn, function(req, res) {
+
+app.get("/blogs", function(req, res) {
   Blog.find({},function(err, blogs){
     if(err){
       console.log(err)
@@ -100,7 +99,7 @@ app.post("/blogs",isLoggedIn,function(req,res){
 ////////////////////////////////////////show routes//////////////////////////
 
 
-app.get("/blogs/:id",isLoggedIn,function(req, res){
+app.get("/blogs/:id",function(req, res){
   Blog.findById(req.params.id).populate("comments").exec(function(err,foundBlogs){
       if(err){
     console.log(err)
@@ -166,6 +165,64 @@ res.redirect("/blogs/" + req.params.id);
 });
 
 
+
+//===========================================ask question=====================//
+
+app.get("/askQuestion" ,isLoggedIn,function(req,res){
+   res.render("askQuestion");
+});
+
+
+
+
+
+//=====================================askquestion post routes====================================//
+
+
+app.post("/",function(req,res){
+ var askedQuestion = req.body.question;
+  var question = {question:askedQuestion}
+  Question.create(question,function(err,question){
+    if(err){
+      console.log(err)
+    } else{
+      question.questionAskerId.id = req.user._id;
+      question.questionAsker = req.user.username;
+      question.save();
+      res.redirect("/")
+    }
+  })
+});
+
+
+
+//==============================================questions==========================================//
+
+app.get("/",function(req,res){
+Question.find({},function(err,question){
+    if(err){
+      console.log(err)
+    } else{
+       res.render("blog",{questions:question});
+    }
+  });
+});
+
+
+//========================================answer route===============================//
+
+app.get("/question/:id",function(req, res){
+  Question.findById(req.params.id,function(err,foundQuestion){
+      if(err){
+    console.log(err)
+} else{
+  res.render("answer",{answers:foundQuestion});
+  
+}});
+});
+
+
+
 ///////////////////////my blog/////////////////////////////////////
 
 
@@ -228,6 +285,13 @@ app.delete("/blogs/:id",ownership,function(req,res){
    });
 });
 
+
+
+
+
+
+
+
 /////////////////////////user sign in////////////////////////////////////////
 
 app.get("/register",function(req,res){
@@ -243,7 +307,7 @@ app.post("/register",function(req,res){
       
     } else{
        passport.authenticate("local")(req, res, function(){
-       res.redirect("/blogs");
+       res.redirect("/");
     });
     }
   });
@@ -257,7 +321,7 @@ app.get("/login",function(req,res){
 });
 
 app.post("/login", passport.authenticate("local",{
-  successRedirect:"/blogs",
+  successRedirect:"/",
   failureRedirect:"/login"
 }), function(req,res){
 });
