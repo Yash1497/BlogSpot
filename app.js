@@ -168,7 +168,7 @@ res.redirect("/blogs/" + req.params.id);
 
 //===========================================ask question=====================//
 
-app.get("/askQuestion" ,isLoggedIn,function(req,res){
+app.get("/askQuestion",isLoggedIn,function(req,res){
    res.render("askQuestion");
 });
 
@@ -179,9 +179,8 @@ app.get("/askQuestion" ,isLoggedIn,function(req,res){
 //=====================================askquestion post routes====================================//
 
 
-app.post("/",function(req,res){
- var askedQuestion = req.body.question;
-  var question = {question:askedQuestion}
+app.post("/",isLoggedIn,function(req,res){
+  var question = {question:req.body.question}
   Question.create(question,function(err,question){
     if(err){
       console.log(err)
@@ -211,15 +210,60 @@ Question.find({},function(err,question){
 
 //========================================answer route===============================//
 
-app.get("/question/:id",function(req, res){
+app.get("/question/:id",isLoggedIn,function(req, res){
   Question.findById(req.params.id,function(err,foundQuestion){
       if(err){
     console.log(err)
 } else{
-  res.render("answer",{answers:foundQuestion});
+  res.render("answer",{question:foundQuestion});
   
 }});
 });
+
+
+
+//=======================================answer post routes==============================///
+
+app.post("/question/:id",isLoggedIn,function(req,res){
+  
+  Question.findById(req.params.id,function(err,question){
+    if (err) {
+      console.log(err);
+    } else {
+      
+      var answer = {
+        answer:req.body.answer,
+        answerdBy:req.user.username,
+        answererId:req.user._id
+      }
+      question.answers.push(answer);
+      question.save();
+      res.redirect("back");
+      
+      
+      
+    }
+  })
+  
+})
+
+
+
+
+
+// app.post("/question/:id",function(req,res){
+//   Question.findById(req.param.id,function(err,question){
+//     if(err){
+//       console.log(err)
+//     } else{
+//       var answer = {answer:req.body.answer}
+
+//       question.answers.push(answer);
+// //       question.save();
+//       res.redirect("/question/"+req.params.id)
+//     }
+//   })
+// });
 
 
 

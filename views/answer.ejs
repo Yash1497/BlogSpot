@@ -1,1 +1,54 @@
 <% include ./partials/header %>
+
+<div class="row">
+  <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0"></div>
+   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+     <div class=" question">
+          <strong ><%- question.question%></strong>
+        </div>
+        <div> 
+          <p class="pull-right" ><spam class="text-muted"> Add by</spam> <em><%= question.questionAsker%></em><spam class="text-muted"> on</spam> <em><%= question.created.toDateString() %></em></p>
+         </div>
+       <button class="answerbutton"><i class="fa fa-edit"></i>Answer</button>
+        <hr>
+     <% question.answers.forEach(function(answer){%>
+     <div class="card mb-2">       
+      <div class="card-body">
+       <p><%- answer.answer%></p>
+     <div> 
+          <p class="pull-right" ><spam class="text-muted"> Answer by</spam> <em><%= answer.answerdBy%></em><spam class="text-muted"> on</spam> <em><%= answer.created.toDateString() %></em></p>
+        </div>
+          </div>
+       </div>
+     <%})%>
+    
+        <form action="/question/<%=question._id%>" method="POST">
+          <div class="form-group"> 
+           <textarea class="form-control" rows="10" placeholderholder="Write Your Answer" name="answer"></textarea>
+        <button class="btn btn-primary submit">Submit</button>
+        </div>
+        </form>
+    
+     </div>
+ 
+  <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0"></div>
+</div>
+
+<style> 
+  .question{
+    margin-top:20px;
+    font-size:25px;
+  }
+
+</style>
+
+<script>
+  $("form").hide()
+  
+   $(document).ready(function(){
+    $(".answerbutton").click(function(){
+        $("form").toggle();
+    });
+});
+
+</script>
