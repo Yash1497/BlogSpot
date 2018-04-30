@@ -112,7 +112,7 @@ app.get("/blogs/:id",function(req, res){
 //==============================================================Commemts route================================================//
 
 
-app.get("/blogs/:id/comments" ,function(req,res){
+app.get("/blogs/:id/comments" ,isLoggedIn,function(req,res){
    Blog.findById(req.params.id,function(err,blog){
     if(err){
       console.log(err)
@@ -154,7 +154,7 @@ app.post("/blogs/:id/comments" ,function(req,res){
 
 
 
-app.delete("/blogs/:id/comments/:comment_id",ownership,function(req,res){
+app.delete("/blogs/:id/comments/:comment_id",function(req,res){
   Comment.findByIdAndRemove(req.params.comment_id, function(err){
      if(err){
     console.log(err)
