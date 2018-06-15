@@ -16,12 +16,10 @@ var questionSchema = new mongoose.Schema({
     answerdBy:String,
     answer:String,
     created:{type:Date, default:Date.now},
-    answererId:{
       id:{
           type : mongoose.Schema.Types.ObjectId,
           ref:"User"
-      
-      }
+        
     }
   }]
   

@@ -48,14 +48,37 @@ app.use(function(req,res,next){
 
 
 app.get("/blogs", function(req, res) {
+  var noMatch = null;
+   if (req.query.search) {
+       const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+     Blog.find({title:regex},function(err, blogs){
+    if(err){
+      console.log(err)
+    } else{
+      if(blogs.length < 1 ){
+        noMatch = "no result found please try again with appropriate search"
+      }else{
+        res.render("home",{blogs:blogs,currentUser:req.user,noMatch:noMatch}); 
+      }
+      
+    }
+  });
+   }else{
   Blog.find({},function(err, blogs){
     if(err){
       console.log(err)
     } else{
-      res.render("home",{blogs:blogs}); 
+      res.render("home",{blogs:blogs,currentUser:req.user,noMatch:noMatch}); 
     }
   });
+       }
 });
+
+
+
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
 
 ///////////////////////////////////////new post////////////////////////////////////////////
 
@@ -92,8 +115,7 @@ app.post("/blogs",isLoggedIn,function(req,res){
       });
       
     }
-
-});
+  });
   });
 
 ////////////////////////////////////////show routes//////////////////////////
@@ -180,7 +202,15 @@ app.get("/askQuestion",isLoggedIn,function(req,res){
 
 
 app.post("/",isLoggedIn,function(req,res){
-  var question = {question:req.body.question}
+   User.findById(req.user._id,function(err,user){
+    if(err){
+      console.log(err)
+    } else{
+  var author = {
+        id:req.user._id,
+        username:req.user.username
+      }
+  var question = {question:req.body.question,author:author}
   Question.create(question,function(err,question){
     if(err){
       console.log(err)
@@ -188,10 +218,14 @@ app.post("/",isLoggedIn,function(req,res){
       question.questionAskerId.id = req.user._id;
       question.questionAsker = req.user.username;
       question.save();
+      user.questions.push(question);
+      user.save();
       res.redirect("/")
     }
   })
+        }
 });
+  });
 
 
 
@@ -225,25 +259,33 @@ app.get("/question/:id",isLoggedIn,function(req, res){
 //=======================================answer post routes==============================///
 
 app.post("/question/:id",isLoggedIn,function(req,res){
-  
+   User.findById(req.user._id,function(err,user){
+    if(err){
+      console.log(err)
+    } else{
   Question.findById(req.params.id,function(err,question){
     if (err) {
       console.log(err);
     } else {
-      
+       
       var answer = {
         answer:req.body.answer,
         answerdBy:req.user.username,
-        answererId:req.user._id
+        id:req.user._id,
+       
       }
       question.answers.push(answer);
       question.save();
+      user.answers.push(answer);
+      user.save()
       res.redirect("back");
       
       
       
     }
   })
+    }
+   });
   
 })
 
@@ -343,8 +385,9 @@ app.get("/register",function(req,res){
 });
 
 app.post("/register",function(req,res){
-  var newUser  = new User({username:req.body.username});
+  var newUser  = new User({username:req.body.username,email:req.body.email});
   var password = req.body.password; 
+  
   User.register(newUser, password, function(err, user){
     if(err){
       console.log(err);
