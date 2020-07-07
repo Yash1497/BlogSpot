@@ -2,19 +2,19 @@
 
 
 <div id="newContainer" class="ui main text container segment">
-  <div id="newHeader" class="ui huge header ">NEW BLOGS</div>
+  <div id="newHeader" class="ui huge header "><strong>Start NEW BLOG</strong></div>
   <form id="newForm" class="ui form" action="/blogs" method="POST">
     <div class="filed">
-      <label>TITLE</label>
+      <label>TITLE:</label>
       <input type="text" placeholder="Blog Name" name="title">
     </div>
     <div class="filed">
-       <label>IMAGE</label>
+       <label>IMAGE:</label>
        <input type="text" placeholder="Image" name="image">
     </div>
     <div class="field">
-       <label>Blog Content</label>
-       <textarea name="body"></textarea>
+       <label>Blog Content-</label>
+       <textarea class="form-control" rows="3" name="body"></textarea><br>
     </div>
       <input class="ui inverted green button big" type="submit">
   </form>
@@ -24,16 +24,22 @@
 <style>
   
   body{
-    background:#022747;
+    background:#1F2833;
   }
  #newHeader{
     color:red;
   }
   
   #newContainer{
-    background:#1995B6;
+    background:#F2F2F2;
   }
 
+
+
+  form{
+    margin-top:20px;
+  }
+ 
 </style>
 
 

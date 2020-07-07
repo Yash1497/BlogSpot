@@ -12,7 +12,7 @@ var Question          = require("./models/question")
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
-mongoose.connect("mongodb://localhost/restfull_blog");
+mongoose.connect("mongodb://chirag778:chirag123@ds263656.mlab.com:63656/blogapp");
 app.use(methodOverride("_method"));
 
 

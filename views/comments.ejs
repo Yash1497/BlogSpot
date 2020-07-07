@@ -1,7 +1,7 @@
 <% include partials/header %>
 
 <div id="newContainer" class="ui main text container segment">
-  <div id="newHeader" class="ui huge header ">Add  new comment to <%= blog.title %></div>
+  <div id="newHeader" class="ui huge header "><strong>Add  new comment to <%= blog.title %> blog</strong> </div>
        <form id="newForm" class="ui form" action="/blogs/<%= blog._id %>/comments" method="POST">
       <div class="filled">
         <input  type="text" placeholder="text" name="comment[text]">
@@ -15,7 +15,7 @@
 <style>
   
   body{
-    background:#022747;
+    background:#1F2833;
   }
  #newHeader{
     color:red;
@@ -23,7 +23,7 @@
   }
   
   #newContainer{
-    background:#1995B6;
+    background:#F2F2F2;
   }
 
 </style>
